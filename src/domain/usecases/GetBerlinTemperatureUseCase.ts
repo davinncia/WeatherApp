@@ -16,6 +16,7 @@ export class GetBerlinTemperatureUseCase {
       console.log(weatherData);
       return {
         temperature: weatherData.current_weather.temperature.toString(),
+        weatherCode: weatherData.current_weather.weatherCode
       };
     }
 

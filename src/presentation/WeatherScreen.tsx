@@ -35,7 +35,7 @@ const WeatherScreen: React.FC = () => {
         }}>
         <Text style={styles.highlight}>Berlin</Text>
         <Text style={[styles.sectionTitle]}>{weather.temperature}°c</Text>
-        <WeatherIcon padding={20}/>
+        <WeatherIcon code={weather.weatherCode} padding={20}/>
         <AppButton title="Get Weather" onPress={fetchWeather} />
       </View>
       <View style={{flex: 3, backgroundColor: 'lightskyblue'}} />
