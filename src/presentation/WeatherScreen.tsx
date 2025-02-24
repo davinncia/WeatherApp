@@ -4,6 +4,7 @@ import {WeatherApiService} from "../data/api/WeatherApiService.ts";
 import {WeatherRepository} from "../data/repositories/WeatherRepository.ts";
 import {GetBerlinTemperatureUseCase} from "../domain/usecases/GetBerlinTemperatureUseCase.ts";
 import {WeatherUI} from "./model/WeatherUI.ts";
+import {AppButton} from "./AppButton.tsx";
 const WeatherScreen: React.FC = () => {
   const [weather, setWeather] = useState<WeatherUI>({temperature: '0'});
 
@@ -26,15 +27,15 @@ const WeatherScreen: React.FC = () => {
       <View
         style={{
           flex: 2,
-          backgroundColor: 'rgba(255, 140, 0, 0.2)',
+          backgroundColor: 'lightseagreen',
           justifyContent: 'center',
           alignItems: 'center',
         }}>
         <Text style={styles.highlight}>Berlin</Text>
-        <Text style={styles.sectionTitle}>{weather.temperature}°c</Text>
-        <Button title="Get Weather" onPress={fetchWeather} />
+        <Text style={[styles.sectionTitle, {paddingBottom: 10}]}>{weather.temperature}°c</Text>
+        <AppButton title="Get Weather" onPress={fetchWeather} />
       </View>
-      <View style={{flex: 3, backgroundColor: 'rgba(0, 128, 0, 0.2)'}} />
+      <View style={{flex: 3, backgroundColor: 'lightskyblue'}} />
     </View>
   );
 };
@@ -42,14 +43,15 @@ const WeatherScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
+    color: 'white',
   },
   highlight: {
     fontWeight: '700',
+    color: 'white',
   },
 });
 
