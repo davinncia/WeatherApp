@@ -5,6 +5,8 @@ import {WeatherRepository} from "../data/repositories/WeatherRepository.ts";
 import {GetBerlinTemperatureUseCase} from "../domain/usecases/GetBerlinTemperatureUseCase.ts";
 import {WeatherUI} from "./model/WeatherUI.ts";
 import {AppButton} from "./AppButton.tsx";
+import WeatherIcon from "./WeatherIcon.tsx";
+
 const WeatherScreen: React.FC = () => {
   const [weather, setWeather] = useState<WeatherUI>({temperature: '0'});
 
@@ -32,7 +34,8 @@ const WeatherScreen: React.FC = () => {
           alignItems: 'center',
         }}>
         <Text style={styles.highlight}>Berlin</Text>
-        <Text style={[styles.sectionTitle, {paddingBottom: 10}]}>{weather.temperature}°c</Text>
+        <Text style={[styles.sectionTitle]}>{weather.temperature}°c</Text>
+        <WeatherIcon padding={20}/>
         <AppButton title="Get Weather" onPress={fetchWeather} />
       </View>
       <View style={{flex: 3, backgroundColor: 'lightskyblue'}} />
