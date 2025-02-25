@@ -1,5 +1,7 @@
 import React from 'react';
 import {View, Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import {CityRepository} from '../../data/repositories/CityRepository.ts';
+
 
 const cities = [
   'New York',
@@ -19,9 +21,11 @@ const cities = [
   'Cape Town',
 ];
 
+const cityRepository = new CityRepository();
+
 export default function City({ navigation }: { navigation: any }) {
   const handleItemPress = (item: string) => {
-    console.log(item);
+    cityRepository.saveCityName(item);
   };
 
   const renderItem = ({ item }: { item: string }) => (

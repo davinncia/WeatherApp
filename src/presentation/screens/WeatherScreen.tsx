@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {WeatherApiService} from "../../data/api/WeatherApiService.ts";
 import {WeatherRepository} from "../../data/repositories/WeatherRepository.ts";
 import {GetBerlinTemperatureUseCase} from "../../domain/usecases/GetBerlinTemperatureUseCase.ts";
 import {WeatherUI} from "../model/WeatherUI.ts";
 import {AppButton} from "../AppButton.tsx";
 import WeatherIcon from "../WeatherIcon.tsx";
+import {CityRepository} from "../../data/repositories/CityRepository.ts";
+
+const cityRepository = new CityRepository();
 
 const WeatherScreen: React.FC = ({navigation}) => {
   const [weather, setWeather] = useState<WeatherUI>({temperature: '0'});
@@ -20,6 +23,8 @@ const WeatherScreen: React.FC = ({navigation}) => {
     console.log('responded');
   };
 
+  const city = cityRepository.getCityName();
+
   return (
     <View
       style={[
@@ -33,7 +38,7 @@ const WeatherScreen: React.FC = ({navigation}) => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Text style={styles.highlight}>Berlin</Text>
+        <Text style={styles.highlight}>{city}</Text>
         <Text style={[styles.sectionTitle]}>{weather.temperature}°c</Text>
         <WeatherIcon code={weather.weatherCode} padding={20}/>
         <AppButton title="Get Weather" onPress={() => navigation.navigate('CityScreen')} />
