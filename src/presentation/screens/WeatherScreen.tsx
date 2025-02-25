@@ -1,17 +1,15 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {WeatherApiService} from "../../data/api/WeatherApiService.ts";
-import {WeatherRepository} from "../../data/repositories/WeatherRepository.ts";
-import {GetBerlinTemperatureUseCase} from "../../domain/usecases/GetBerlinTemperatureUseCase.ts";
-import {WeatherUI} from "../model/WeatherUI.ts";
-import {AppButton} from "../AppButton.tsx";
-import WeatherIcon from "../WeatherIcon.tsx";
-import {CityRepository} from "../../data/repositories/CityRepository.ts";
-
-const cityRepository = new CityRepository();
+import {WeatherApiService} from '../../data/api/WeatherApiService.ts';
+import {WeatherRepository} from '../../data/repositories/WeatherRepository.ts';
+import {GetBerlinTemperatureUseCase} from '../../domain/usecases/GetBerlinTemperatureUseCase.ts';
+import {WeatherUI} from '../model/WeatherUI.ts';
+import {AppButton} from '../AppButton.tsx';
+import WeatherIcon from '../WeatherIcon.tsx';
+import {useAppContext} from '../AppContext.tsx';
 
 const WeatherScreen: React.FC = ({navigation}) => {
-  const [weather, setWeather] = useState<WeatherUI>({temperature: '0'});
+  const [weather, setWeather] = useState<WeatherUI>({temperature: '0', weatherCode: 1});
 
   const fetchWeather = async () => {
     const apiService = new WeatherApiService();
@@ -23,34 +21,37 @@ const WeatherScreen: React.FC = ({navigation}) => {
     console.log('responded');
   };
 
-  const city = cityRepository.getCityName();
+  const {cityName} = useAppContext();
 
   return (
     <View
       style={[
-        styles.container,
-        {flexDirection: 'column'},
+        styles.mainContainer,
       ]}>
-      <View
-        style={{
-          flex: 2,
-          backgroundColor: 'lightseagreen',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Text style={styles.highlight}>{city}</Text>
+      <View style={styles.topContainer}>
+        <Text style={styles.highlight}>{cityName}</Text>
         <Text style={[styles.sectionTitle]}>{weather.temperature}°c</Text>
         <WeatherIcon code={weather.weatherCode} padding={20}/>
-        <AppButton title="Get Weather" onPress={() => navigation.navigate('CityScreen')} />
+        <AppButton title="Get Weather" onPress={() => navigation.navigate('CityScreen')}/>
       </View>
-      <View style={{flex: 3, backgroundColor: 'lightskyblue'}} />
+      <View style={styles.bottomContainer}/>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
+    flexDirection: 'column',
+  },
+  bottomContainer: {
+    flex: 3, backgroundColor: 'lightskyblue',
+  },
+  topContainer: {
+    flex: 2,
+    backgroundColor: 'lightseagreen',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   sectionTitle: {
     fontSize: 24,

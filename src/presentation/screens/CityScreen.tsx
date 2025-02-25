@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
-import {CityRepository} from '../../data/repositories/CityRepository.ts';
+import {useAppContext} from '../AppContext.tsx';
 
 
 const cities = [
@@ -21,14 +21,15 @@ const cities = [
   'Cape Town',
 ];
 
-const cityRepository = new CityRepository();
+export default function City({navigation}: { navigation: any }) {
+  const {setCityName} = useAppContext();
 
-export default function City({ navigation }: { navigation: any }) {
   const handleItemPress = (item: string) => {
-    cityRepository.saveCityName(item);
+    setCityName(item);
+    navigation.goBack();
   };
 
-  const renderItem = ({ item }: { item: string }) => (
+  const renderItem = ({item}: { item: string }) => (
     <TouchableOpacity onPress={() => handleItemPress(item)} style={styles.itemContainer}>
       <Text style={styles.cityName}>{item}</Text>
     </TouchableOpacity>
@@ -38,7 +39,7 @@ export default function City({ navigation }: { navigation: any }) {
     <View style={styles.container}>
       <FlatList
         data={cities}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(_item, index) => index.toString()}
         renderItem={renderItem}
         contentContainerStyle={styles.listContent}
       />
