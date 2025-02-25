@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
-import {WeatherApiService} from "../data/api/WeatherApiService.ts";
-import {WeatherRepository} from "../data/repositories/WeatherRepository.ts";
-import {GetBerlinTemperatureUseCase} from "../domain/usecases/GetBerlinTemperatureUseCase.ts";
-import {WeatherUI} from "./model/WeatherUI.ts";
-import {AppButton} from "./AppButton.tsx";
-import WeatherIcon from "./WeatherIcon.tsx";
+import {WeatherApiService} from "../../data/api/WeatherApiService.ts";
+import {WeatherRepository} from "../../data/repositories/WeatherRepository.ts";
+import {GetBerlinTemperatureUseCase} from "../../domain/usecases/GetBerlinTemperatureUseCase.ts";
+import {WeatherUI} from "../model/WeatherUI.ts";
+import {AppButton} from "../AppButton.tsx";
+import WeatherIcon from "../WeatherIcon.tsx";
 
-const WeatherScreen: React.FC = () => {
+const WeatherScreen: React.FC = ({navigation}) => {
   const [weather, setWeather] = useState<WeatherUI>({temperature: '0'});
 
   const fetchWeather = async () => {
@@ -36,7 +36,7 @@ const WeatherScreen: React.FC = () => {
         <Text style={styles.highlight}>Berlin</Text>
         <Text style={[styles.sectionTitle]}>{weather.temperature}°c</Text>
         <WeatherIcon code={weather.weatherCode} padding={20}/>
-        <AppButton title="Get Weather" onPress={fetchWeather} />
+        <AppButton title="Get Weather" onPress={() => navigation.navigate('CityScreen')} />
       </View>
       <View style={{flex: 3, backgroundColor: 'lightskyblue'}} />
     </View>
